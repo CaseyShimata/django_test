@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		{% load static %}
+		<link rel="stylesheet" type="text/css" href="{% static 'django_test_app/css/django_test.css' %}" />
+
+		<title>trip_info_page</title>
+	</head>
+	<body>
+		<div class="wrapper">
+			<a href="http://localhost:8000/success_page">Home</a> <a href='http://Locathost:8000/logout'>Logout</a>
+
+	{% if current_trip %}
+		{% for trip in current_trip %}
+			<h1>{{trip.destination}}</h1>
+		{% endfor %}
+	{% endif %}
+	{% if current_trip %}
+		{% for trip in current_trip %}
+			<p>Planned By: </p> <p>{{trip.creator.name}}</p>
+		{% endfor %}
+	{% endif %}
+	{% if current_trip %}
+		{% for trip in current_trip %}
+			<p>Description: </p> <p>{{trip.description}}</p>
+			<p>Start Date: </p> <p>{{trip.travel_date_from}}</p>
+			<p>End Date: </p> <p>{{trip.travel_date_to}}</p>
+		{% endfor %}
+	{% endif %}
+
+
+			<h1>Other users' joining the trip:</h1>
+	{% if users_on_trip %}
+		{% for user in users_on_trip %}
+			<p>{{user.name}}</p>
+		{% endfor %}
+	{% endif %}
+		</div>
+	</body>
+</html>

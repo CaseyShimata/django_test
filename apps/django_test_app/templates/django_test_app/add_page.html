@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		{% load static %}
+		<link rel="stylesheet" type="text/css" href="{% static 'django_test_app/css/django_test.css' %}" />
+
+		<title>add_page</title>
+	</head>
+	<body>
+		<div class="wrapper">
+			<a href="http://localhost:8000/success_page">Home</a> <a href='http://Locathost:8000/logout'>Logout</a>
+
+		{% if messages %}
+		{% for message in messages %}
+			<p>{{message}}</p>
+		{% endfor %}
+		{% endif %}
+
+			<h1>Add a Trip</h1>
+			<form action="/add" method="post">{% csrf_token %}
+					Destination: <select name="destination">
+						<option value="Fiji">Fiji</option>
+						<option value="Tokyo">Tokyo</option>
+						<option value="Las Vegas">Las Vegas</option>
+					</select>
+					Travel Start Date: <input type="date" name="travel_date_from" placeholder="travel_date_from">
+					Travel End Date: <input type="date" name="travel_date_to" placeholder="travel_date_to">
+					Travel Plan: : <input type="text" name="plan" placeholder="plan">
+					<input type="hidden" name="creator" value="{{request.session.username}}">
+					<input type="submit" name="add" value="Add">
+			</form>
+		</div>
+	</body>
+</html>

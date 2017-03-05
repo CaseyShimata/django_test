@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		{% load static %}
+		<link rel="stylesheet" type="text/css" href="{% static 'django_test_app/css/django_test.css' %}" />
+
+		<title>success_page</title>
+	</head>
+	<body>
+		<div class="wrapper">
+			<a href="http://localhost:8000/log_out">Logout</a>
+
+		{% if messages %}
+		{% for message in messages %}
+			<p>{{message}}</p>
+		{% endfor %}
+		{% endif %}
+
+			<h1>Hello, {{request.session.username}}!</h1>
+
+			<p>Your Trip Schedules</p>
+			<table>
+				<tr>
+					<td>Destination</td>
+					<td>Travel Start Date</td>
+					<td>Travel End Date</td>
+					<td>Plan</td>
+				</tr>
+	{% if my_trips %}
+	{% for trip in my_trips %}
+	{% comment %} do a join and .filter where id matches session id {% endcomment %}
+				<tr>
+					<td><a href="http://localhost:8000/trip_info_page/{{trip.id}}">{{trip.destination}}</a></td>
+					<td>{{trip.travel_date_from}}</td>
+					<td>{{trip.travel_date_to}}</td>
+					<td>{{trip.plan}}</td>
+				</tr>
+	{% endfor %}
+	{% endif %}
+			</table>
+
+			<p>Other User's Travel Plans</p>
+			<table>
+				<tr>
+					<td>Name</td>
+					<td>Destination</td>
+					<td>Travel Start Date</td>
+					<td>Travel End Date</td>
+					<td>Do You Want to Join?</td>
+				</tr>
+	{% if trips_not_joined %}
+	{% for trip in trips_not_joined %}
+				<tr>
+					{% comment %} delve deeper to pull out the User.name from the Trip {% endcomment %}
+					<td>{{trip.creator.name}}</td>
+					<td><a href="http://localhost:8000/trip_info_page/{{trip.id}}">{{trip.destination}}</a></td>
+					<td>{{trip.travel_date_from}}</td>
+					<td>{{trip.travel_date_to}}</td>
+					<td><a href="http://localhost:8000/join/{{trip.id}}">Join</a></td>
+				</tr>
+	{% endfor %}
+	{% endif %}
+			</table>
+			<a href="http://localhost:8000/add_page">Add Travel Plan</a></td>
+		</div>
+	</body>
+</html>
